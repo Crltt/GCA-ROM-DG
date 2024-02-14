@@ -15,66 +15,6 @@ def problem(argument):
     """
 
     match argument:
-        case 14:
-            problem_name = "maxwelldg"
-            variable = 'TEz'
-            mu1 = np.linspace(1, 130,130)
-            mu_space = [mu1]
-            n_param = 1
-        case 15:
-            problem_name = "maxwelldg0125"
-            variable = 'TEz'
-            mu1 = np.linspace(1, 335,335)
-            mu_space = [mu1]
-            n_param = 1
-        case 16:
-            problem_name = "maxwelldg0125"
-            variable = 'THx'
-            mu1 = np.linspace(1, 335,335)
-            mu_space = [mu1]
-            n_param = 1
-        case 17:
-            problem_name = "maxwelldg0125"
-            variable = 'THy'
-            mu1 = np.linspace(1, 335,335)
-            mu_space = [mu1]
-            n_param = 1    
-        case 18:
-            problem_name = "maxwelldg0125p2"
-            variable = 'TEz'
-            mu1 = np.linspace(1, 305,305)
-            mu_space = [mu1]
-            n_param = 1
-        case 19:
-            problem_name = "maxwelldg0125p2"
-            variable = 'THx'
-            mu1 = np.linspace(1, 305,305)
-            mu_space = [mu1]
-            n_param = 1
-        case 20:
-            problem_name = "maxwelldg0125p2"
-            variable = 'THy'
-            mu1 = np.linspace(1, 305,305)
-            mu_space = [mu1]
-            n_param = 1  
-        case 21:
-            problem_name = "maxwelldg0125p2hp"
-            variable = 'TEz'
-            mu1 = np.linspace(1, 305,305)
-            mu_space = [mu1]
-            n_param = 1
-        case 22:
-            problem_name = "maxwelldg0125p2hp"
-            variable = 'THx'
-            mu1 = np.linspace(1, 305,305)
-            mu_space = [mu1]
-            n_param = 1
-        case 23:
-            problem_name = "maxwelldg0125p2hp"
-            variable = 'THy'
-            mu1 = np.linspace(1, 305,305)
-            mu_space = [mu1]
-            n_param = 1  
         case 24:
             problem_name = "maxwelldg00625p1hp"
             variable = 'TEz'
