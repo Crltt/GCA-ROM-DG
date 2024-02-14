@@ -98,7 +98,9 @@ def compute_analytic_error(res,dataset,test_snapshots, scaler, HyperParams):
       a_sol_matr[snap,:] = a_sol
    
 
-    a_sol_tensor = torch.tensor(a_sol_matr).reshape(res.shape[0],x.shape[0],1)
+    a_sol_tensor = torch.tensor(a_sol_matr).reshape(res.shape[0],x.shape[0],6)
+    print(a_sol_tensor.shape)
+    print(res.shape)
     print('a_sol',a_sol_tensor.shape)
     Z = scaling.inverse_scaling(a_sol_tensor, scaler, HyperParams.scaling_type)
     Z_net = scaling.inverse_scaling(res, scaler, HyperParams.scaling_type)
