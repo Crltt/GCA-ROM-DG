@@ -105,7 +105,7 @@ def compute_analytic_error(res,dataset,test_snapshots, scaler, HyperParams):
     print('Z',Z.shape)
     print('Z_net',Z_net.shape)
     for snap in range(res.shape[0]):
-        error_abs = np.linalg.norm(abs(Z[:, test_snapshots[snap]] - Z_net[:, test_snapshots[snap]]))
+        error_abs = np.linalg.norm(abs(Z[:, snap] - Z_net[:, snap]))
         norm_z = np.linalg.norm(Z[:, test_snapshots[snap]], 2)
         error_abs_list.append(error_abs)
         norm_z_list.append(norm_z)
