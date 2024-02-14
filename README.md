@@ -15,7 +15,7 @@ They can be easily installed via `pip` or `conda`.
 The latest version of `pyg` is currently not available on `conda`. The required dependencies, exported in *utils/gca_rom.yml*, can be automatically installed in a new environment via  
 
 ```bash
-conda env create -f gca_rom.yml
+conda env create -f gca_rom_dg.yml
 ```
 
 #### **Linux**
@@ -34,7 +34,7 @@ The official distribution is on GitHub, and you can clone the repository using
 git clone git@github.com:fpichi/gca-rom.git
 ```
 
-## Summary of GCA-ROM Features
+## Summary of GCA-ROM-DG Features
 
 ### - OFFLINE PHASE
 <!-- ![](docs/images/gca_off_1.png) -->
