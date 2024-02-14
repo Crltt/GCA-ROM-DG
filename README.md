@@ -31,7 +31,7 @@ conda install matplotlib pandas scipy jupyter h5py
 The official distribution is on GitHub, and you can clone the repository using
 
 ```bash
-git clone git@github.com:fpichi/gca-rom.git
+git clone git@github.com:Crltt/GCA-ROM-DG.git
 ```
 
 ## Summary of GCA-ROM-DG Features
