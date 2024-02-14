@@ -21,8 +21,8 @@ conda env create -f gca_rom.yml
 #### **Linux**
 
 ```bash
-conda create -n 'gca_rom' python=3.10
-conda activate gca_rom
+conda create -n 'gca_rom_dg' python=3.10
+conda activate gca_rom_dg
 conda install pytorch -c pytorch 
 conda install pyg -c pyg
 conda install matplotlib pandas scipy jupyter h5py
