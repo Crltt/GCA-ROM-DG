@@ -93,8 +93,8 @@ def compute_analytic_error(res,dataset,test_snapshots, scaler, HyperParams):
     norm_z_list = list()
 
     a_sol_matr = np.empty((res.shape[0],int(x.shape[0])))
-    for snap in (test_snapshots-1):
-      a_sol = np.sin(np.pi*x)*np.sin(np.pi*y)*np.cos(np.sqrt(2)*(snap-1)*0.0005747126)
+    for snap in range(res.shape[0]):
+      a_sol = np.sin(np.pi*x)*np.sin(np.pi*y)*np.cos(np.sqrt(2)*(int(test_snapshots[snap]))*0.0005747126)
       a_sol_matr[snap,:] = a_sol
    
 
@@ -104,9 +104,9 @@ def compute_analytic_error(res,dataset,test_snapshots, scaler, HyperParams):
     Z_net = scaling.inverse_scaling(res, scaler, HyperParams.scaling_type)
     print('Z',Z.shape)
     print('Z_net',Z_net.shape)
-    for snap in (test_snapshots-1):
-        error_abs = np.linalg.norm(abs(Z[:, snap] - Z_net[:, snap]))
-        norm_z = np.linalg.norm(Z[:, snap], 2)
+    for snap in range(res.shape[0]):
+        error_abs = np.linalg.norm(abs(Z[:, test_snapshots[snap]] - Z_net[:, test_snapshots[snap]]))
+        norm_z = np.linalg.norm(Z[:, test_snapshots[snap]], 2)
         error_abs_list.append(error_abs)
         norm_z_list.append(norm_z)
     return error_abs_list, norm_z_list, a_sol_tensor
