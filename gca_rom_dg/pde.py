@@ -19,7 +19,7 @@ def problem(argument):
             problem_name = "maxwelldg00625p1hp"
             variable = 'TEz'
             mu1 = np.linspace(0.0035,int(1/6),245)
-
+            mu_space = [mu1]
             n_param = 1
         case 25:
             problem_name = "maxwelldg00625p1hp"
