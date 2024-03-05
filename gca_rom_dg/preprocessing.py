@@ -39,7 +39,7 @@ def graphs_dataset(dataset, HyperParams):
     dof = int(dataset.dof)
     if dataset.dim == 3:
        coordz = dataset.coordz
-        coordxyz.append(coordz)
+       coordxyz.append(coordz)
         
        zz = dataset.zz
        xyz.append(zz)
