@@ -31,7 +31,7 @@ def graphs_dataset(dataset, HyperParams):
 
     coordx = dataset.coordx
     coordy = dataset.coordy
-    coordxyz = [coordx, cooordy]
+    coordxyz = [coordx, coordy]
     
     xx = dataset.xx
     yy = dataset.yy
