@@ -34,6 +34,8 @@ class LoadDataset(Dataset):
         self.U = torch.tensor(self.data_mat[variable])
         self.xx = torch.tensor(self.data_mat['xx'])
         self.yy = torch.tensor(self.data_mat['yy'])
+        self.coordx = torch.tensor(self.data_mat['coordx'])
+        self.coordy = torch.tensor(self.data_mat['coordy'])
         self.dof = self.data_mat['dof']
         self.dim = 3
         try:
