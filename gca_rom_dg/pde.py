@@ -60,20 +60,20 @@ def problem(argument):
             problem_name = "maxwelldgparam"
             variable = 'TEz'
             mu1 = np.linspace(1, 300,300)
-            mu2 = [np.linspace(1,1,30)*8.451365660882516, np.linspace(1,1,30)*8.150576639168921, np.linspace(1,1,30)*9.657458497408417,np.linspace(1,1,30)*9.325449970024170, np.linspace(1,1,30)*9.07716175885174, np.linspace(1,1,30)*7.163933478590142, np.linspace(1,1,30)*6.880812768081277, np.linspace(1,1,30)*8.590706586245833, np.linspace(1,1,30)*8.459595371133265, np.linspace(1,1,30)*8.328310981355269]
+            mu2 = np.concatenate(([np.ones(30)*8.451365660882516, np.ones(30)*8.150576639168921, np.ones(30)*9.657458497408417,np.ones(30)*9.325449970024170, np.ones(30)*9.07716175885174, np.ones(30)*7.163933478590142, np.ones(30)*6.880812768081277, np.ones(30)*8.590706586245833, np.ones(30)*8.459595371133265, np.ones(30)*8.328310981355269]))
             mu_space = [mu1, mu2]
             n_param = 2
         case 31:
             problem_name = "maxwelldgparam"
             variable = 'THx'
             mu1 = np.linspace(1, 300,300)
-            mu2 = [np.linspace(1,1,30)*8.451365660882516, np.linspace(1,1,30)*8.150576639168921, np.linspace(1,1,30)*9.657458497408417,np.linspace(1,1,30)*9.325449970024170, np.linspace(1,1,30)*9.07716175885174, np.linspace(1,1,30)*7.163933478590142, np.linspace(1,1,30)*6.880812768081277, np.linspace(1,1,30)*8.590706586245833, np.linspace(1,1,30)*8.459595371133265, np.linspace(1,1,30)*8.328310981355269]
+            mu2 = np.concatenate(([np.ones(30)*8.451365660882516, np.ones(30)*8.150576639168921, np.ones(30)*9.657458497408417,np.ones(30)*9.325449970024170, np.ones(30)*9.07716175885174, np.ones(30)*7.163933478590142, np.ones(30)*6.880812768081277, np.ones(30)*8.590706586245833, np.ones(30)*8.459595371133265, np.ones(30)*8.328310981355269]))
             mu_space = [mu1, mu2]
             n_param = 2
         case 32:
             problem_name = "maxwelldgparam"
             variable = 'THy'
             mu1 = np.linspace(1, 300,300)
-            mu2 = [np.linspace(1,1,30)*8.451365660882516, np.linspace(1,1,30)*8.150576639168921, np.linspace(1,1,30)*9.657458497408417,np.linspace(1,1,30)*9.325449970024170, np.linspace(1,1,30)*9.07716175885174, np.linspace(1,1,30)*7.163933478590142, np.linspace(1,1,30)*6.880812768081277, np.linspace(1,1,30)*8.590706586245833, np.linspace(1,1,30)*8.459595371133265, np.linspace(1,1,30)*8.328310981355269]
+            mu2 = np.concatenate(([np.ones(30)*8.451365660882516, np.ones(30)*8.150576639168921, np.ones(30)*9.657458497408417,np.ones(30)*9.325449970024170, np.ones(30)*9.07716175885174, np.ones(30)*7.163933478590142, np.ones(30)*6.880812768081277, np.ones(30)*8.590706586245833, np.ones(30)*8.459595371133265, np.ones(30)*8.328310981355269]))
             n_param = 2 
     return problem_name, variable, mu_space, n_param
