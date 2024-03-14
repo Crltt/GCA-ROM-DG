@@ -47,6 +47,8 @@ def hyperparameters_selection(name, var, n):
             preset = [0, 0, 3, 2, 1, 1, 1, 2, 1]
         elif name == "maxwelldg00625p2hp":
             preset = [0, 0, 3, 2, 1, 1, 1, 2, 1]
+        elif name == "maxwelldgparam":
+            preset = [0, 0, 3, 2, 1, 1, 1, 2, 1]
         return preset
 
 
