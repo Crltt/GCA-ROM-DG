@@ -66,7 +66,7 @@ def plot_latent(HyperParams, latents, latents_estimation):
     plt.savefig(HyperParams.net_dir+'box_plot_latents'+HyperParams.net_run+'.png', bbox_inches='tight', dpi=500)
     
 
-def plot_error(res, VAR_all, scaler_all, HyperParams, mu_space, params, train_trajectories, vars, p1=0, p2=-1):
+def plot_error(res, VAR_all, scaler_all, dataset, HyperParams, mu_space, params, train_trajectories, vars, p1=0, p2=-1):
     """
     This function plots the relative error between the predicted and actual results.
 
