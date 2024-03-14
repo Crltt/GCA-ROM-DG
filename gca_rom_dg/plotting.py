@@ -81,8 +81,9 @@ def plot_error(res, VAR_all, scaler_all, HyperParams, mu_space, params, train_tr
     train_trajectories (ndarray): The indices of the training data
     vars (str): The name of the variable being plotted
     """
-
-    u_hf = scaling.inverse_scaling(VAR_all, scaler_all, HyperParams.scaling_type)
+    dof = int(dataset.dof)
+    VAR = VAR_all.reshape(VAR_all.shape[0],int(VAR_all.shape[1]/dof),dof)
+    u_hf = scaling.inverse_scaling(VAR, scaler_all, HyperParams.scaling_type)
     u_app = scaling.inverse_scaling(res, scaler_all, HyperParams.scaling_type)
     error = np.linalg.norm(u_app - u_hf, axis=0) / np.linalg.norm(u_hf, axis=0)
     mu1_range = mu_space[p1]
@@ -188,7 +189,6 @@ def plot_error_fields(SNAP, results, VAR_all, scaler_all, HyperParams, dataset, 
     params: np.array, model parameters
     """
     dof = int(dataset.dof)
-    #VAR = VAR_all.reshape(336,146,3)
     VAR = VAR_all.reshape(VAR_all.shape[0],int(VAR_all.shape[1]/dof),dof)
     fig = plt.figure()
     Z = scaling.inverse_scaling(VAR, scaler_all, HyperParams.scaling_type)
