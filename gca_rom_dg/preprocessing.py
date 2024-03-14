@@ -29,9 +29,9 @@ def graphs_dataset(dataset, HyperParams):
     test_snapshots: a list of indices of the test set.
     """
 
-    coordx = dataset.coordx
-    coordy = dataset.coordy
-    coordxyz = [coordx, coordy]
+    #coordx = dataset.coordx
+    #coordy = dataset.coordy
+    #coordxyz = [coordx, coordy]
     
     xx = dataset.xx
     yy = dataset.yy
@@ -39,7 +39,7 @@ def graphs_dataset(dataset, HyperParams):
     dof = int(dataset.dof)
     if dataset.dim == 3:
        coordz = dataset.coordz
-       coordxyz.append(coordz)
+       #coordxyz.append(coordz)
         
        zz = dataset.zz
        xyz.append(zz)
