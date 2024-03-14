@@ -60,7 +60,7 @@ def problem(argument):
             problem_name = "maxwelldgparam"
             variable = 'TEz'
             mu1 = np.linspace(1, 300,300)
-            mu2 = np.concatenate(([np.ones(30)*8.451365660882516, np.ones(30)*8.150576639168921, np.ones(30)*9.657458497408417,np.ones(30)*9.325449970024170, np.ones(30)*9.07716175885174, np.ones(30)*7.163933478590142, np.ones(30)*6.880812768081277, np.ones(30)*8.590706586245833, np.ones(30)*8.459595371133265, np.ones(30)*8.328310981355269]))
+            mu2 = np.linspace(1.25, 3.5,10)
             mu_space = [mu1, mu2]
             n_param = 2
         case 31:
