@@ -111,5 +111,5 @@ def graphs_dataset(dataset, HyperParams):
     val_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
     
     return loader, train_loader, test_loader, \
-            val_loader, scaler_all, scaler_test, xyz, coordxyz, VAR_all, VAR_test, \
+            val_loader, scaler_all, scaler_test, xyz, VAR_all, VAR_test, \
                 train_snapshots, test_snapshots
