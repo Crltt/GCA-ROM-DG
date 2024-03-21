@@ -16,7 +16,7 @@ params = {'legend.fontsize': 'x-large',
          'ytick.labelsize':'x-large'}
 plt.rcParams.update(params)
 
-def average_nodes(T, res): # ricordo di passare SNAP
+def average_nodes(T, res):
     N = int(T.shape[0])
     resavg = np.zeros(N)
 
@@ -141,7 +141,7 @@ def plot_error(res, VAR_all, scaler_all, dataset, HyperParams, mu_space, params,
     plt.savefig(HyperParams.net_dir+'relative_error_'+vars+HyperParams.net_run+'.png', transparent=True, dpi=500)
 
 
-def plot_fields(SNAP, results, scaler_all, HyperParams, dataset, xyz, params):
+def plot_fields(SNAP, results, scaler_all, HyperParams, dataset, xyz,coordxyz, params):
     """
     Plots the field solution for a given snapshot.
 
@@ -158,8 +158,16 @@ def plot_fields(SNAP, results, scaler_all, HyperParams, dataset, xyz, params):
     """
 
     fig = plt.figure()    
-    Z_net = scaling.inverse_scaling(results, scaler_all, HyperParams.scaling_type)
-    z_net = Z_net[:, SNAP]
+    #Z_net = scaling.inverse_scaling(results, scaler_all, HyperParams.scaling_type)
+    #z_net = Z_net[:, SNAP]
+
+    res = np.array(results)
+    TT = np.array(dataset.T)
+    z_avg = average_nodes(TT,res[SNAP,:])
+
+    coordxx = coordxyz[0]
+    coordyy = coordxyz[1]
+
     xx = xyz[0]
     yy = xyz[1]
     if dataset.dim == 2:
@@ -167,7 +175,7 @@ def plot_fields(SNAP, results, scaler_all, HyperParams, dataset, xyz, params):
         cmap = cm.get_cmap(name='jet', lut=None)
         gs1 = gridspec.GridSpec(1, 1)
         ax = plt.subplot(gs1[0, 0])
-        cs = ax.tripcolor(xx[:, SNAP], yy[:, SNAP], z_net, triang, shading='flat', cmap=cmap)
+        cs = ax.tricontourf(coordxx[:, SNAP], coordyy[:, SNAP], triang, z_avg, 100, cmap=cmap)
         divider = make_axes_locatable(ax)
         cax = divider.append_axes("right", size="5%", pad=0.1)
         cbar = plt.colorbar(cs, cax=cax)
