@@ -17,17 +17,17 @@ params = {'legend.fontsize': 'x-large',
 plt.rcParams.update(params)
 
 def average_nodes(T,res):
-    N = T.size(0)
-    dof = T.size(1)
-    resavg = np.zeros(N,1)
-    for k in range(N/dof):
+    N = int(T.size(0))
+    dof =int(T.size(1))
+    resavg = np.zeros(N)
+    for k in range(N):
         [i,j] = np.argwhere(T == k)
         tmp = 0
-        for s in range(i.shape()):
+        for s in range(i.size(0)):
             tmp = tmp + res(j(s),i(s))
             tmp =  tmp/i.shape()
 
-        resavg(k) == tmp
+        resavg(k) ==  np.array(tmp) #problem
 
     return resavg
 
