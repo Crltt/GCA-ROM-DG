@@ -16,16 +16,25 @@ params = {'legend.fontsize': 'x-large',
          'ytick.labelsize':'x-large'}
 plt.rcParams.update(params)
 
-def average_nodes(T, res):
+def average_nodes(T, res): # ricordo di passare SNAP
     N = int(T.shape[0])
-    dof = int(T.shape[1])
     resavg = np.zeros(N)
+
     for k in range(N):
-        [i, j] = np.array(np.argwhere(T == k))
-        tmp = np.zeros(2)
-        for s in range(N):
-            tmp == res[j[s], i[s]]
-        resavg[k] = tmp  # corretto
+        indices = np.argwhere(T == k)
+        if len(indices) > 0:
+            i = indices[:, 0]
+            j = indices[:, 1]
+            total = 0
+            for s in range(len(i)):
+                total += res[i[s], j[s]]
+            if len(i) > 0:
+                resavg[k] = total / len(i)
+            else:
+                resavg[k] = 0
+        else:
+            resavg[k] = 0  # Se non ci sono corrispondenze, assegna 0
+
     return resavg
 
 def plot_loss(HyperParams):
