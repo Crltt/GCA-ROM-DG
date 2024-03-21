@@ -29,9 +29,9 @@ def graphs_dataset(dataset, HyperParams):
     test_snapshots: a list of indices of the test set.
     """
 
-    #coordx = dataset.coordx
-    #coordy = dataset.coordy
-    #coordxyz = [coordx, coordy]
+    coordx = dataset.coordx
+    coordy = dataset.coordy
+    coordxyz = [coordx, coordy]
     
     xx = dataset.xx
     yy = dataset.yy
@@ -39,7 +39,7 @@ def graphs_dataset(dataset, HyperParams):
     dof = int(dataset.dof)
     if dataset.dim == 3:
        coordz = dataset.coordz
-       #coordxyz.append(coordz)
+       coordxyz.append(coordz)
         
        zz = dataset.zz
        xyz.append(zz)
@@ -111,5 +111,5 @@ def graphs_dataset(dataset, HyperParams):
     val_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
     
     return loader, train_loader, test_loader, \
-            val_loader, scaler_all, scaler_test, xyz, VAR_all, VAR_test, \
+            val_loader, scaler_all, scaler_test, xyz, coordxyz, VAR_all, VAR_test, \
                 train_snapshots, test_snapshots
