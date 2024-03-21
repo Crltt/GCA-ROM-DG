@@ -16,9 +16,10 @@ params = {'legend.fontsize': 'x-large',
          'ytick.labelsize':'x-large'}
 plt.rcParams.update(params)
 
-def average_nodes(T,res,dof):
-    N = res.shape(1)
-    resavg = np.zeros ()
+def average_nodes(T,res):
+    N = T.size(0)
+    dof = T.size(1)
+    resavg = np.zeros(N,1)
     for k in range(N/dof):
         [i,j] = np.argwhere(T == k)
         tmp = 0
