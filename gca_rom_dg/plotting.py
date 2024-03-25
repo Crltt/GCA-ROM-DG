@@ -16,8 +16,8 @@ params = {'legend.fontsize': 'x-large',
          'ytick.labelsize':'x-large'}
 plt.rcParams.update(params)
 
-def average_nodes(T, res):
-    N = int(T.shape[0])
+def average_nodes(T, res,coordxx):
+    N = int(coordxx.shape[0])
     resavg = np.zeros(N)
 
     for k in range(N):
@@ -163,10 +163,12 @@ def plot_fields(SNAP, results, scaler_all, HyperParams, dataset, xyz,coordxyz, p
 
     res = np.array(results)
     TT = np.array(dataset.T)
-    z_avg = average_nodes(TT,res[SNAP,:])
+   
 
     coordxx = coordxyz[0]
     coordyy = coordxyz[1]
+
+    z_avg = average_nodes(TT,res[SNAP,:],coordxx)
 
     xx = xyz[0]
     yy = xyz[1]
