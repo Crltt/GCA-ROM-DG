@@ -203,7 +203,7 @@ def plot_fields(SNAP, results, scaler_all, HyperParams, dataset, xyz,coordxyz, p
     plt.savefig(HyperParams.net_dir+'field_solution_'+str(SNAP)+''+HyperParams.net_run+'.png', bbox_inches='tight', dpi=500)
 
 
-def plot_error_fields(SNAP, results, VAR_all, scaler_all, HyperParams, dataset, xyz, params):
+def plot_error_fields(SNAP, results, VAR_all, scaler_all, HyperParams, dataset, xyz, coordxyz, params):
     """
     This function plots a contour map of the error field of a given solution of a scalar field.
     The error is computed as the absolute difference between the true solution and the predicted solution,
@@ -227,7 +227,19 @@ def plot_error_fields(SNAP, results, VAR_all, scaler_all, HyperParams, dataset, 
     z = Z[:, SNAP]
     z_net = Z_net[:, SNAP]
 
-    error = abs(z - z_net)/np.linalg.norm(z, 2)
+    res = np.array(results)
+    var = np.array(VAR)
+    TT = np.array(dataset.T)
+   
+
+    coordxx = coordxyz[0]
+    coordyy = coordxyz[1]
+
+    z_avg = average_nodes(TT,res[SNAP,:],coordxx)
+    z_var = average_nodes(TT,var[SNAP,:],coordxx)
+
+    #error = abs(z - z_net)/np.linalg.norm(z, 2)
+    error = abs(z_var - z_avg)/np.linalg.norm(z_var, 2)
     xx = xyz[0]
     yy = xyz[1]
     if dataset.dim == 2:
@@ -235,7 +247,8 @@ def plot_error_fields(SNAP, results, VAR_all, scaler_all, HyperParams, dataset, 
         cmap = cm.get_cmap(name='jet', lut=None) 
         gs1 = gridspec.GridSpec(1, 1)
         ax = plt.subplot(gs1[0, 0])   
-        cs = ax.tripcolor(xx[:, SNAP], yy[:, SNAP], error, triang, shading='flat', cmap=cmap)
+        #cs = ax.tripcolor(xx[:, SNAP], yy[:, SNAP], error, triang, shading='flat', cmap=cmap)
+        cs = ax.tricontourf(coordxx[:, SNAP], coordyy[:, SNAP], triang, error, 100, cmap=cmap)
         divider = make_axes_locatable(ax)
         cax = divider.append_axes("right", size="5%", pad=0.1)
         cbar = plt.colorbar(cs, cax=cax)
