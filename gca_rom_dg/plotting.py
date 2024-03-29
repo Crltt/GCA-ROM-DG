@@ -16,6 +16,27 @@ params = {'legend.fontsize': 'x-large',
          'ytick.labelsize':'x-large'}
 plt.rcParams.update(params)
 
+def average_nodes(T, res,coordxx):
+    N = int(coordxx.shape[0])
+    resavg = np.zeros(N)
+
+    for k in range(N):
+        indices = np.argwhere(T == k)
+        if len(indices) > 0:
+            i = indices[:, 0]
+            j = indices[:, 1]
+            total = 0
+            for s in range(len(i)):
+                total += res[i[s], j[s]]
+            if len(i) > 0:
+                resavg[k] = total / len(i)
+            else:
+                resavg[k] = 0
+        else:
+            resavg[k] = 0  # Se non ci sono corrispondenze, assegna 0
+
+    return resavg
+
 def plot_loss(HyperParams):
     """
     Plots the history of losses during the training of the autoencoder.
@@ -66,7 +87,7 @@ def plot_latent(HyperParams, latents, latents_estimation):
     plt.savefig(HyperParams.net_dir+'box_plot_latents'+HyperParams.net_run+'.png', bbox_inches='tight', dpi=500)
     
 
-def plot_error(res, VAR_all, scaler_all, HyperParams, mu_space, params, train_trajectories, vars, p1=0, p2=-1):
+def plot_error(res, VAR_all, scaler_all, dataset, HyperParams, mu_space, params, train_trajectories, vars, p1=0, p2=-1):
     """
     This function plots the relative error between the predicted and actual results.
 
@@ -81,8 +102,9 @@ def plot_error(res, VAR_all, scaler_all, HyperParams, mu_space, params, train_tr
     train_trajectories (ndarray): The indices of the training data
     vars (str): The name of the variable being plotted
     """
-
-    u_hf = scaling.inverse_scaling(VAR_all, scaler_all, HyperParams.scaling_type)
+    dof = int(dataset.dof)
+    VAR = VAR_all.reshape(VAR_all.shape[0],int(VAR_all.shape[1]/dof),dof)
+    u_hf = scaling.inverse_scaling(VAR, scaler_all, HyperParams.scaling_type)
     u_app = scaling.inverse_scaling(res, scaler_all, HyperParams.scaling_type)
     error = np.linalg.norm(u_app - u_hf, axis=0) / np.linalg.norm(u_hf, axis=0)
     mu1_range = mu_space[p1]
@@ -119,7 +141,7 @@ def plot_error(res, VAR_all, scaler_all, HyperParams, mu_space, params, train_tr
     plt.savefig(HyperParams.net_dir+'relative_error_'+vars+HyperParams.net_run+'.png', transparent=True, dpi=500)
 
 
-def plot_fields(SNAP, results, scaler_all, HyperParams, dataset, xyz, params):
+def plot_fields(SNAP, results, scaler_all, HyperParams, dataset, xyz,coordxyz, params):
     """
     Plots the field solution for a given snapshot.
 
@@ -136,8 +158,18 @@ def plot_fields(SNAP, results, scaler_all, HyperParams, dataset, xyz, params):
     """
 
     fig = plt.figure()    
-    Z_net = scaling.inverse_scaling(results, scaler_all, HyperParams.scaling_type)
-    z_net = Z_net[:, SNAP]
+    #Z_net = scaling.inverse_scaling(results, scaler_all, HyperParams.scaling_type)
+    #z_net = Z_net[:, SNAP]
+
+    res = np.array(results)
+    TT = np.array(dataset.T)
+   
+
+    coordxx = coordxyz[0]
+    coordyy = coordxyz[1]
+
+    z_avg = average_nodes(TT,res[SNAP,:],coordxx)
+
     xx = xyz[0]
     yy = xyz[1]
     if dataset.dim == 2:
@@ -145,7 +177,7 @@ def plot_fields(SNAP, results, scaler_all, HyperParams, dataset, xyz, params):
         cmap = cm.get_cmap(name='jet', lut=None)
         gs1 = gridspec.GridSpec(1, 1)
         ax = plt.subplot(gs1[0, 0])
-        cs = ax.tripcolor(xx[:, SNAP], yy[:, SNAP], z_net, triang, shading='flat', cmap=cmap)
+        cs = ax.tricontourf(coordxx[:, SNAP], coordyy[:, SNAP], triang, z_avg, 100, cmap=cmap)
         divider = make_axes_locatable(ax)
         cax = divider.append_axes("right", size="5%", pad=0.1)
         cbar = plt.colorbar(cs, cax=cax)
@@ -171,7 +203,7 @@ def plot_fields(SNAP, results, scaler_all, HyperParams, dataset, xyz, params):
     plt.savefig(HyperParams.net_dir+'field_solution_'+str(SNAP)+''+HyperParams.net_run+'.png', bbox_inches='tight', dpi=500)
 
 
-def plot_error_fields(SNAP, results, VAR_all, scaler_all, HyperParams, dataset, xyz, params):
+def plot_error_fields(SNAP, results, VAR_all, scaler_all, HyperParams, dataset, xyz, coordxyz, params):
     """
     This function plots a contour map of the error field of a given solution of a scalar field.
     The error is computed as the absolute difference between the true solution and the predicted solution,
@@ -188,7 +220,6 @@ def plot_error_fields(SNAP, results, VAR_all, scaler_all, HyperParams, dataset, 
     params: np.array, model parameters
     """
     dof = int(dataset.dof)
-    #VAR = VAR_all.reshape(336,146,3)
     VAR = VAR_all.reshape(VAR_all.shape[0],int(VAR_all.shape[1]/dof),dof)
     fig = plt.figure()
     Z = scaling.inverse_scaling(VAR, scaler_all, HyperParams.scaling_type)
@@ -196,7 +227,19 @@ def plot_error_fields(SNAP, results, VAR_all, scaler_all, HyperParams, dataset, 
     z = Z[:, SNAP]
     z_net = Z_net[:, SNAP]
 
-    error = abs(z - z_net)/np.linalg.norm(z, 2)
+    res = np.array(results)
+    var = np.array(VAR)
+    TT = np.array(dataset.T)
+   
+
+    coordxx = coordxyz[0]
+    coordyy = coordxyz[1]
+
+    z_avg = average_nodes(TT,res[SNAP,:],coordxx)
+    z_var = average_nodes(TT,var[SNAP,:],coordxx)
+
+    #error = abs(z - z_net)/np.linalg.norm(z, 2)
+    error = abs(z_var - z_avg)/np.linalg.norm(z_var, 2)
     xx = xyz[0]
     yy = xyz[1]
     if dataset.dim == 2:
@@ -204,7 +247,8 @@ def plot_error_fields(SNAP, results, VAR_all, scaler_all, HyperParams, dataset, 
         cmap = cm.get_cmap(name='jet', lut=None) 
         gs1 = gridspec.GridSpec(1, 1)
         ax = plt.subplot(gs1[0, 0])   
-        cs = ax.tripcolor(xx[:, SNAP], yy[:, SNAP], error, triang, shading='flat', cmap=cmap)
+        #cs = ax.tripcolor(xx[:, SNAP], yy[:, SNAP], error, triang, shading='flat', cmap=cmap)
+        cs = ax.tricontourf(coordxx[:, SNAP], coordyy[:, SNAP], triang, error, 100, cmap=cmap)
         divider = make_axes_locatable(ax)
         cax = divider.append_axes("right", size="5%", pad=0.1)
         cbar = plt.colorbar(cs, cax=cax)
